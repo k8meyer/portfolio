@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kate Meyer — Strategy, Analytics & Design</title>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@300,400,500,700,300i,400i,500i,700i&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#161616;--bg-card:#1E1E1E;--bg-card-hover:#252525;--white:#ECE7DF;--white-dim:#B8B3AB;--white-muted:#7A766F;--border:rgba(236,231,223,.08);--border-hover:rgba(236,231,223,.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Satoshi',sans-serif;background:var(--bg);color:var(--white);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--white);color:var(--bg)}
+
+/* === LOADER === */
+.loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;animation:loaderFade .8s ease 2.2s forwards}
+@keyframes loaderFade{to{opacity:0;visibility:hidden;pointer-events:none}}
+.loader-name{font-family:'Clash Display',sans-serif;font-size:1rem;letter-spacing:.25em;text-transform:uppercase;color:var(--white-muted);margin-bottom:2.5rem;opacity:0;animation:loaderTextIn .6s ease .2s forwards}
+@keyframes loaderTextIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.loader-bar{width:180px;height:1px;background:var(--border);overflow:hidden;opacity:0;animation:loaderTextIn .4s ease .4s forwards}
+.loader-bar-fill{height:100%;width:0%;background:var(--white);animation:barGrow 1.6s cubic-bezier(.16,1,.3,1) .6s forwards}
+@keyframes barGrow{to{width:100%}}
+
+/* Hide real content until loader done */
+.page-content{opacity:0;animation:pageIn .6s ease 2.4s forwards}
+@keyframes pageIn{to{opacity:1}}
+
+/* === ANIMATIONS === */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes clipIn{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0% 0 0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* === NAV === */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(22,22,22,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:padding .3s;animation:fadeDown .8s cubic-bezier(.16,1,.3,1) 2.5s both}
+nav.scrolled{padding:1rem 3.5rem}
+.nav-logo{font-family:'Clash Display',sans-serif;font-size:1.1rem;font-weight:500;color:var(--white);text-decoration:none}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{font-size:.78rem;font-weight:400;color:var(--white-muted);text-decoration:none;letter-spacing:.04em;transition:color .3s;display:flex;align-items:center;gap:.5rem}
+.nav-links a:hover{color:var(--white)}
+.nav-num{font-size:.65rem;color:var(--white-dim);font-weight:500}
+
+/* === HERO === */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10rem 0 6rem}
+.hero-intro{padding:0 3.5rem;margin-bottom:4rem}
+.hero-tag{font-size:.72rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--white-dim);margin-bottom:1.5rem;animation:clipIn 1s cubic-bezier(.16,1,.3,1) 2.7s both}
+.hero-sub{font-size:1.1rem;font-weight:300;color:var(--white-dim);max-width:480px;line-height:1.8;animation:fadeUp .8s cubic-bezier(.16,1,.3,1) 2.9s both}
+
+.marquee-wrapper{overflow:hidden;padding:9rem 0;animation:scaleIn .8s cubic-bezier(.16,1,.3,1) 3.1s both}
+.marquee-track{display:flex;width:max-content;animation:marquee 30s linear infinite}
+.marquee-track:hover{animation-play-state:paused}
+.marquee-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(6rem,18vw,16rem);font-weight:400;white-space:nowrap;padding-right:1.5rem;letter-spacing:-.02em;line-height:.75;color:var(--white);text-transform:uppercase;transform:scaleY(1.8) scaleX(.92);transform-origin:center}
+.marquee-sep{font-family:'Bebas Neue',sans-serif;font-size:clamp(6rem,18vw,16rem);color:var(--white-muted);opacity:.2;padding-right:1.5rem;display:flex;align-items:center;line-height:.75;transform:scaleY(1.8) scaleX(.92);transform-origin:center}
+
+.hero-bottom{padding:3rem 3.5rem 0;display:flex;justify-content:flex-end;align-items:flex-end}
+.hero-ctas{display:flex;gap:1rem;animation:fadeUp .8s cubic-bezier(.16,1,.3,1) 3.3s both}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2rem;font-family:'Satoshi',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1)}
+.btn-primary{background:var(--white);color:var(--bg)}
+.btn-primary:hover{opacity:.85;transform:translateY(-2px);box-shadow:0 8px 30px rgba(236,231,223,.1)}
+.btn-ghost{background:transparent;color:var(--white-dim);border:1px solid var(--border-hover)}
+.btn-ghost:hover{border-color:var(--white-dim);color:var(--white);transform:translateY(-2px)}
+
+/* === SECTIONS === */
+section{padding:7rem 3.5rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.section-label{font-size:.68rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--white-muted);margin-bottom:.8rem}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:400;letter-spacing:.02em;line-height:1;text-transform:uppercase}
+.section-desc{font-size:.95rem;font-weight:300;color:var(--white-muted);max-width:420px;line-height:1.7;text-align:right}
+
+/* === ABOUT === */
+.about{border-top:1px solid var(--border)}
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:start}
+.about-text p{font-size:1rem;line-height:1.85;color:var(--white-dim);margin-bottom:1.5rem}
+.about-cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.about-card{padding:1.8rem;background:var(--bg);transition:background .4s cubic-bezier(.16,1,.3,1)}
+.about-card:hover{background:var(--bg-card)}
+.about-card .label{font-size:.65rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--white-muted);margin-bottom:.6rem}
+.about-card .value{font-family:'Clash Display',sans-serif;font-size:1.05rem;font-weight:500;color:var(--white);line-height:1.3}
+.about-card .sub{font-size:.78rem;color:var(--white-muted);margin-top:.25rem}
+.skills-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:2.5rem}
+.skill-tag{font-size:.72rem;font-weight:400;letter-spacing:.03em;padding:.4rem .85rem;border:1px solid var(--border);color:var(--white-muted);transition:all .3s cubic-bezier(.16,1,.3,1);border-radius:20px}
+.skill-tag:hover{border-color:var(--white-dim);color:var(--white);transform:translateY(-2px)}
+
+/* === PROJECTS === */
+.projects{border-top:1px solid var(--border)}
+.project-card{display:grid;grid-template-columns:1fr 1.1fr;gap:0;border:1px solid var(--border);margin-bottom:1.5rem;transition:all .5s cubic-bezier(.16,1,.3,1);overflow:hidden;border-radius:8px}
+.project-card:hover{border-color:var(--border-hover);box-shadow:0 12px 60px rgba(0,0,0,.4);transform:translateY(-4px)}
+.project-card:nth-child(even){grid-template-columns:1.1fr 1fr;direction:rtl}
+.project-card:nth-child(even)>*{direction:ltr}
+.project-visual{display:flex;align-items:center;justify-content:center;position:relative;min-height:380px;overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1)}
+.project-card:nth-child(1) .project-visual{background:linear-gradient(160deg,#1A1A1A,#222)}
+.project-card:nth-child(2) .project-visual{background:linear-gradient(160deg,#1D1D1D,#252525)}
+.project-card:nth-child(3) .project-visual{background:linear-gradient(160deg,#1A1A1A,#202020)}
+.project-card:nth-child(4) .project-visual{background:linear-gradient(160deg,#1E1E1E,#272727)}
+.project-card:nth-child(5) .project-visual{background:linear-gradient(160deg,#1B1B1B,#232323)}
+.project-visual-inner{text-align:center;z-index:1;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.project-card:hover .project-visual-inner{transform:scale(1.05)}
+.project-number{font-family:'Bebas Neue',sans-serif;font-size:7rem;font-weight:400;line-height:1;color:rgba(236,231,223,.05);margin-bottom:.5rem;transition:color .5s ease}
+.project-card:hover .project-number{color:rgba(236,231,223,.1)}
+.project-type-badge{font-size:.65rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:.35rem 1rem;border:1px solid rgba(236,231,223,.1);color:var(--white-muted);display:inline-block;border-radius:20px;transition:all .5s ease}
+.project-card:hover .project-type-badge{border-color:rgba(236,231,223,.25);color:var(--white-dim)}
+.project-visual::after{content:'';position:absolute;width:200px;height:200px;border:1px solid rgba(236,231,223,.03);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%) scale(1);transition:transform .8s cubic-bezier(.16,1,.3,1),border-color .5s ease}
+.project-card:hover .project-visual::after{transform:translate(-50%,-50%) scale(1.3);border-color:rgba(236,231,223,.06)}
+.project-info{padding:3.5rem;display:flex;flex-direction:column;justify-content:center;background:var(--bg-card);transition:background .5s ease}
+.project-card:hover .project-info{background:var(--bg-card-hover)}
+.project-course{font-size:.68rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--white-muted);margin-bottom:1rem}
+.project-title{font-family:'Clash Display',sans-serif;font-size:1.55rem;font-weight:500;letter-spacing:-.01em;line-height:1.3;margin-bottom:1.2rem;color:var(--white)}
+.project-desc{font-size:.88rem;line-height:1.8;color:var(--white-muted);margin-bottom:1.8rem}
+.project-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.project-tag{font-size:.68rem;font-weight:400;letter-spacing:.04em;padding:.3rem .75rem;border:1px solid var(--border);color:var(--white-muted);transition:all .4s cubic-bezier(.16,1,.3,1);border-radius:20px}
+.project-card:hover .project-tag{border-color:var(--border-hover)}
+
+/* === DESIGN === */
+.design-section{border-top:1px solid var(--border)}
+.design-content{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.design-text p{font-size:1rem;line-height:1.85;color:var(--white-dim);margin-bottom:1.5rem}
+.design-cta-block{padding:2.5rem;border:1px solid var(--border);background:var(--bg-card);border-radius:8px;transition:all .4s cubic-bezier(.16,1,.3,1)}
+.design-cta-block:hover{border-color:var(--border-hover);transform:translateY(-2px)}
+.design-cta-block p{font-family:'Clash Display',sans-serif;font-size:1.15rem;color:var(--white-dim);line-height:1.6;margin-bottom:1.5rem}
+.design-cta-block p strong{color:var(--white);font-weight:500}
+
+/* === RESUME === */
+.resume-section{border-top:1px solid var(--border)}
+.resume-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.resume-card{padding:2.8rem;border:1px solid var(--border);background:var(--bg-card);text-decoration:none;color:inherit;display:block;transition:all .5s cubic-bezier(.16,1,.3,1);border-radius:8px}
+.resume-card:hover{border-color:var(--white-dim);background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.resume-card .r-icon{width:36px;height:36px;border:1px solid var(--border-hover);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--white-dim);margin-bottom:1.5rem;border-radius:8px;transition:all .4s ease}
+.resume-card:hover .r-icon{border-color:var(--white-dim)}
+.resume-card h3{font-family:'Clash Display',sans-serif;font-size:1.3rem;font-weight:500;margin-bottom:.6rem}
+.resume-card p{font-size:.85rem;color:var(--white-muted);line-height:1.7}
+.resume-card .r-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--white-dim);transition:all .4s cubic-bezier(.16,1,.3,1)}
+.resume-card:hover .r-link{color:var(--white);gap:.8rem}
+
+/* === CONTACT === */
+.contact{border-top:1px solid var(--border);text-align:center;padding:10rem 3.5rem}
+.contact .section-label{margin-bottom:1rem}
+.contact-heading{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5rem);font-weight:400;letter-spacing:.02em;line-height:1.1;max-width:500px;margin:0 auto 1.5rem;text-transform:uppercase}
+.contact-sub{font-size:.95rem;color:var(--white-muted);max-width:400px;margin:0 auto 3rem;line-height:1.7}
+.contact-email-link{display:inline-flex;align-items:center;gap:.8rem;font-family:'Clash Display',sans-serif;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:400;color:var(--white);text-decoration:none;padding-bottom:.3rem;border-bottom:1px solid var(--border-hover);transition:all .4s cubic-bezier(.16,1,.3,1)}
+.contact-email-link:hover{color:var(--white-dim);border-color:var(--white-dim);gap:1.2rem}
+.contact-email-link .arrow{font-size:1rem;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.contact-email-link:hover .arrow{transform:translateX(6px)}
+.contact-socials{display:flex;justify-content:center;gap:2.5rem;margin-top:3rem}
+.contact-socials a{font-size:.75rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--white-muted);text-decoration:none;transition:color .3s;position:relative}
+.contact-socials a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--white);transition:width .4s cubic-bezier(.16,1,.3,1)}
+.contact-socials a:hover{color:var(--white)}
+.contact-socials a:hover::after{width:100%}
+
+/* === FOOTER === */
+footer{padding:2rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+footer p{font-size:.72rem;color:var(--white-muted);letter-spacing:.03em}
+.back-top{font-size:.72rem;color:var(--white-muted);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+.back-top:hover{color:var(--white)}
+
+@media(max-width:900px){nav{padding:1.2rem 1.5rem}nav.scrolled{padding:.9rem 1.5rem}section{padding:5rem 1.5rem}.hero{padding:8rem 0 4rem}.hero-intro,.hero-bottom{padding:0 1.5rem}.about-grid{grid-template-columns:1fr;gap:3rem}.project-card,.project-card:nth-child(even){grid-template-columns:1fr;direction:ltr}.project-visual{min-height:200px}.resume-cards{grid-template-columns:1fr}.section-header{flex-direction:column;align-items:flex-start;gap:1rem}.section-desc{text-align:left}.design-content{grid-template-columns:1fr;gap:2rem}.hero-bottom{flex-direction:column;gap:2rem;align-items:flex-start}.contact{padding:6rem 1.5rem}.marquee-wrapper{padding:5rem 0}}
+@media(max-width:600px){.nav-links{display:none}.about-cards{grid-template-columns:1fr}.hero-ctas{flex-direction:column}.btn{text-align:center;justify-content:center;width:100%}}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader">
+<div class="loader-name">Kate Meyer</div>
+<div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- PAGE -->
+<div class="page-content">
+
+<nav id="navbar">
+<a href="#" class="nav-logo">Kate Meyer &#8482;</a>
+<ul class="nav-links">
+<li><a href="#about"><span class="nav-num">01</span> About</a></li>
+<li><a href="#projects"><span class="nav-num">02</span> Work</a></li>
+<li><a href="#design"><span class="nav-num">03</span> Design</a></li>
+<li><a href="#resumes"><span class="nav-num">04</span> Resume</a></li>
+<li><a href="#contact"><span class="nav-num">05</span> Contact</a></li>
+</ul>
+</nav>
+
+<section class="hero">
+<div class="hero-intro">
+<div class="hero-tag">University of Kentucky &middot; Class of 2026</div>
+<p class="hero-sub">I'm Kate &#8212; a strategist, analyst, and designer building at the intersection of data and creative problem-solving.</p>
+</div>
+<div class="marquee-wrapper">
+<div class="marquee-track">
+<span class="marquee-text">Strategy &amp; Analytics &amp; Design</span>
+<span class="marquee-sep">&#8212;</span>
+<span class="marquee-text">Strategy &amp; Analytics &amp; Design</span>
+<span class="marquee-sep">&#8212;</span>
+<span class="marquee-text">Strategy &amp; Analytics &amp; Design</span>
+<span class="marquee-sep">&#8212;</span>
+<span class="marquee-text">Strategy &amp; Analytics &amp; Design</span>
+<span class="marquee-sep">&#8212;</span>
+</div>
+</div>
+<div class="hero-bottom">
+<div></div>
+<div class="hero-ctas">
+<a href="#projects" class="btn btn-primary">View my work &#8595;</a>
+<a href="#contact" class="btn btn-ghost">Get in touch</a>
+</div>
+</div>
+</section>
+
+<section class="about" id="about"><div class="section-inner">
+<div class="section-header"><div><div class="section-label">01 &#8212; About</div><div class="section-title">About Me</div></div><div class="section-desc">Management, marketing, analytics, and design &#8212; I like working where these things overlap.</div></div>
+<div class="about-grid"><div class="about-text">
+<p>Currently a senior at the University of Kentucky graduating May 2026 with a dual major in Management &amp; Marketing, a minor in Business Analytics, and a freelance graphic design practice on the side.</p>
+<p>The best business decisions happen when analytical rigor meets creative intuition. Over the past four years, I've built a foundation in predictive modeling, data visualization, strategic case analysis, and visual design &#8212; and I'm drawn to work that sits at the intersection of all of them.</p>
+<p>After graduation, I'm pursuing roles in strategy consulting, marketing analytics, operations, and rotational programs &#8212; opportunities where I can apply both the quantitative and creative sides of my background from day one.</p>
+</div><div>
+<div class="about-cards">
+<div class="about-card"><div class="label">Education</div><div class="value">University of Kentucky</div><div class="sub">B.S. Management &amp; Marketing</div></div>
+<div class="about-card"><div class="label">Minor</div><div class="value">Business Analytics</div><div class="sub">Data modeling &amp; visualization</div></div>
+<div class="about-card"><div class="label">Graduation</div><div class="value">May 2026</div><div class="sub">Lexington, KY</div></div>
+<div class="about-card"><div class="label">Freelance</div><div class="value">Graphic Design</div><div class="sub">Brand &amp; visual identity</div></div>
+</div>
+<div class="skills-row">
+<span class="skill-tag">Python</span><span class="skill-tag">SQL</span><span class="skill-tag">Tableau</span><span class="skill-tag">Excel</span><span class="skill-tag">Logistic Regression</span><span class="skill-tag">Random Forest</span><span class="skill-tag">K-Means Clustering</span><span class="skill-tag">NLP / LDA</span><span class="skill-tag">Adobe Suite</span><span class="skill-tag">Figma</span><span class="skill-tag">SWOT / BOR Analysis</span>
+</div></div></div>
+</div></section>
+
+<section class="projects" id="projects"><div class="section-inner">
+<div class="section-header"><div><div class="section-label">02 &#8212; Selected Work</div><div class="section-title">Projects &amp; Case Studies</div></div><div class="section-desc">Analytics projects and strategic case analyses &#8212; each chosen to show range across data, strategy, and marketing.</div></div>
+
+<div class="project-card"><div class="project-visual"><div class="project-visual-inner"><div class="project-number">01</div><div class="project-type-badge">Solo Analytics Project</div></div></div><div class="project-info"><div class="project-title">Predicting Conversion Success in Digital Marketing</div><div class="project-desc">Built a full ETL pipeline integrating two real-world e-commerce datasets (2,200+ customer records and 100,000+ Brazilian marketplace orders). Engineered engagement proxies for CTR, CPC, and CAC, then applied logistic regression, random forest, and K-means clustering to predict which customers convert &#8212; and which channels drive the most efficient spend.</div><div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Logistic Regression</span><span class="project-tag">Random Forest</span><span class="project-tag">K-Means</span><span class="project-tag">ETL Pipeline</span><span class="project-tag">Marketing KPIs</span></div></div></div>
+
+<div class="project-card"><div class="project-visual"><div class="project-visual-inner"><div class="project-number">02</div><div class="project-type-badge">Team Analytics Project</div></div></div><div class="project-info"><div class="project-title">Predicting Viral Performance on TikTok</div><div class="project-desc">Analyzed 25,911 TikTok videos to identify which controllable content variables predict virality. Used supervised classification (logistic regression and random forest) to model viral probability, evaluated with ROC-AUC. Found that creator tier, content category, and discovery pathway matter more than formatting &#8212; with clear implications for content strategy and brand partnerships.</div><div class="project-tags"><span class="project-tag">Supervised Classification</span><span class="project-tag">ROC-AUC</span><span class="project-tag">Feature Importance</span><span class="project-tag">Social Media Strategy</span><span class="project-tag">Python</span></div></div></div>
+
+<div class="project-card"><div class="project-visual"><div class="project-visual-inner"><div class="project-number">03</div><div class="project-type-badge">Team Analytics Project</div></div></div><div class="project-info"><div class="project-title">Remote &amp; Hybrid Job Market Trend Analysis</div><div class="project-desc">Scraped and analyzed 50,000 job-related tweets (2019&#8211;2023), filtering to 1,409 remote/hybrid posts using keyword extraction. Applied LDA topic modeling and K-means clustering to identify geographic demand patterns, emerging role categories, and actionable recommendations for new graduates entering the workforce.</div><div class="project-tags"><span class="project-tag">NLP</span><span class="project-tag">LDA Topic Modeling</span><span class="project-tag">K-Means Clustering</span><span class="project-tag">Text Analytics</span><span class="project-tag">Labor Market Analysis</span></div></div></div>
+
+<div class="project-card"><div class="project-visual"><div class="project-visual-inner"><div class="project-number">04</div><div class="project-type-badge">Strategy Case Study</div></div></div><div class="project-info"><div class="project-title">Chase Sapphire Reserve: Creating a Millennial Cult Brand</div><div class="project-desc">Analyzed JPMorgan Chase's launch of the Sapphire Reserve card &#8212; dissecting its psychographic-first targeting strategy, experience-driven positioning, competitive response from Amex and Citi, and portfolio management across the three-card Sapphire line. Proposed a forward-looking Gen Z acquisition strategy grounded in the no-fee Sapphire card as an entry point.</div><div class="project-tags"><span class="project-tag">Brand Positioning</span><span class="project-tag">Competitive Analysis</span><span class="project-tag">Segmentation</span><span class="project-tag">Portfolio Strategy</span><span class="project-tag">Consumer Behavior</span></div></div></div>
+
+<div class="project-card"><div class="project-visual"><div class="project-visual-inner"><div class="project-number">05</div><div class="project-type-badge">Strategy Case Study</div></div></div><div class="project-info"><div class="project-title">Impossible Foods, Beyond Meat &amp; Plant-Based Strategy</div><div class="project-desc">Applied the BOR (Brand, Offering, Relationship) framework to evaluate how Impossible Foods and Beyond Meat built competitive advantages in the emerging plant-based meat market. Assessed the Burger King Impossible Whopper partnership &#8212; including its 18% traffic growth and 6% same-store sales lift &#8212; and identified both strategic synergies and long-term positioning risks.</div><div class="project-tags"><span class="project-tag">BOR Framework</span><span class="project-tag">Brand Strategy</span><span class="project-tag">Partnership Analysis</span><span class="project-tag">Market Entry</span><span class="project-tag">Consumer Insights</span></div></div></div>
+</div></section>
+
+<section class="design-section" id="design"><div class="section-inner">
+<div class="section-header"><div><div class="section-label">03 &#8212; Freelance</div><div class="section-title">Graphic Design</div></div></div>
+<div class="design-content"><div class="design-text">
+<p>Beyond analytics and strategy, I've built a freelance design practice creating brand identities, social media assets, and visual systems for small businesses and organizations.</p>
+<p>Design isn't separate from my analytical work &#8212; it's what makes it communicate. Every presentation, visualization, and portfolio piece I build reflects a designer's eye for clarity and composition.</p>
+</div><div class="design-cta-block">
+<p><strong>Portfolio samples coming soon.</strong> In the meantime, I'd love to share examples of my design work directly &#8212; reach out and I'll send over selected pieces from recent client projects.</p>
+<a href="#contact" class="btn btn-primary">Get in touch &#8594;</a>
+</div></div>
+</div></section>
+
+<section class="resume-section" id="resumes"><div class="section-inner">
+<div class="section-header"><div><div class="section-label">04 &#8212; Resume</div><div class="section-title">Two Versions, One Person</div></div><div class="section-desc">Tailored for two career paths &#8212; each reframes the same experiences around different strengths.</div></div>
+<div class="resume-cards">
+<a href="#" class="resume-card"><div class="r-icon">&#9670;</div><h3>Consulting &amp; Strategy</h3><p>Frames experience around operations, process improvement, and strategic problem-solving. Built for roles in management consulting, strategy, and rotational programs.</p><div class="r-link">Download PDF &#8594;</div></a>
+<a href="#" class="resume-card"><div class="r-icon">&#9671;</div><h3>Marketing Analytics</h3><p>Frames experience around consumer insights, campaign performance, and data-driven marketing. Built for marketing analyst, CRM, and brand strategy roles.</p><div class="r-link">Download PDF &#8594;</div></a>
+</div></div></section>
+
+<section class="contact" id="contact"><div class="section-inner">
+<div class="section-label">05 &#8212; Contact</div>
+<div class="contact-heading">Interested In Working Together?</div>
+<p class="contact-sub">I'm actively exploring entry-level opportunities for after graduation in May 2026. Would love to chat.</p>
+<a href="mailto:kate@katemeyer.com" class="contact-email-link"><span class="arrow">&#8594;</span> kate@katemeyer.com</a>
+<div class="contact-socials"><a href="https://www.linkedin.com/in/katemeyer" target="_blank">LinkedIn</a><a href="#" target="_blank">Behance</a></div>
+</div></section>
+
+<footer><p>&#169; 2026 Kate Meyer &#8212; Lexington, KY</p><a href="#" class="back-top">Back to top &#8593;</a></footer>
+
+</div><!-- end page-content -->
+
+<script>
+window.addEventListener('scroll',function(){document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)});
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
+</script>
+</body>
+</html>
